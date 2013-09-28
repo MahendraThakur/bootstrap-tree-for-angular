@@ -1,11 +1,11 @@
 var module;
-
+var template = require('./abn_tree_template.js')
 module = angular.module('angularBootstrapNavTree', []);
 
 module.directive('abnTree', function($timeout) {
   return {
     restrict: 'E',
-    templateUrl: '../dist/abn_tree_template.html',
+    template: template,
     scope: {
       treeData: '=',
       onSelect: '&',

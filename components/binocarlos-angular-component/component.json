@@ -1,0 +1,16 @@
+{
+  "name": "angular",
+  "description": "AngularJS wrapped as a component.",
+  "repo": "binocarlos/angularjs",
+  "version": "1.1.5",
+  "keywords": [
+    "angular",
+    "angularjs",
+    "component"
+  ],
+  "main": "angular.js",
+  "scripts": [
+    "angular.js"
+  ],
+  "license": "MIT"
+}

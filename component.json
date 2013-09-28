@@ -1,0 +1,22 @@
+{
+  "name": "bootstrap-tree-for-angular",
+  "repo": "binocarlos/bootstrap-tree-for-angular",
+  "description": "Angular JS bootstrap tree",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "binocarlos/angular-component": "*",
+    "components/font-awesome": "*"
+  },
+  "development": {},
+  "license": "MIT",
+  "styles": [
+    "dist/abn_tree_style.css"
+  ],
+  "main": "dist/abn_tree_directive.js",
+  "scripts": [
+    "dist/abn_tree_directive.js",
+    "dist/abn_tree_template.js"
+  ],
+  "remotes": []
+}
