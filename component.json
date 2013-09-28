@@ -5,8 +5,7 @@
   "version": "0.0.1",
   "keywords": [],
   "dependencies": {
-    "binocarlos/angular-component": "*",
-    "components/font-awesome": "*"
+    "binocarlos/angular-component": "*"
   },
   "development": {},
   "license": "MIT",
