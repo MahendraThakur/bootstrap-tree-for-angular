@@ -2,6 +2,16 @@
 angular-bootstrap-nav-tree
 ==========================
 
+## PLEASE NOTE
+
+This is a diggerfied tree.
+
+This is to get things done fast
+
+At some point - it would be courtious to extract digger specific stuff and do a pull request with the imporovements (if thats what they turn out to be)
+
+## ORIGINAL README
+
 This is a Tree directive for Angular JS apps that use Bootstrap CSS.
 
 example: http://nickperkinslondon.github.io/angular-bootstrap-nav-tree/test/test_abn_tree.html

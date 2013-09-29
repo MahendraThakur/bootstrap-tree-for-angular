@@ -8,8 +8,7 @@ module.directive('abnTree', function($timeout) {
     template: template,
     scope: {
       treeData: '=',
-      onSelect: '&',
-      initialSelection: '='
+      onSelect: '&'      
     },
     link: function(scope, element, attrs) {
       var expand_level, for_each_branch, on_treeData_change, select_branch, selected_branch;
@@ -31,7 +30,7 @@ module.directive('abnTree', function($timeout) {
         alert('no treeData defined for the tree!');
       }
       if (scope.treeData.length == null) {
-        if (treeData.label != null) {
+        if (treeData._digger != null) {
           scope.treeData = [treeData];
         } else {
           alert('treeData should be an array of root branches');
@@ -62,48 +61,41 @@ module.directive('abnTree', function($timeout) {
       };
       for_each_branch(function(b, level) {
         b.level = level;
-        return b.expanded = b.level < expand_level;
+        return b._data.expanded = b.level < expand_level;
       });
-      selected_branch = null;
+      scope.selectedid = null;
       select_branch = function(branch) {
-        if (branch !== selected_branch) {
-          if (selected_branch != null) {
-            selected_branch.selected = false;
-          }
-          branch.selected = true;
-          selected_branch = branch;
-          if (branch.onSelect != null) {
+        scope.selectedid = branch._digger.diggerid;
+        
+        if (branch.onSelect != null) {
+          return $timeout(function() {
+            return branch.onSelect(branch);
+          });
+        } else {
+          if (scope.onSelect != null) {
             return $timeout(function() {
-              return branch.onSelect(branch);
-            });
-          } else {
-            if (scope.onSelect != null) {
-              return $timeout(function() {
-                return scope.onSelect({
-                  branch: branch
-                });
+              return scope.onSelect({
+                branch: branch
               });
-            }
+            });
           }
         }
       };
       scope.$on('tree:reset', function(ev){
-        if (selected_branch != null) {
-          selected_branch.selected = false;
-        }
-        selected_branch = null;
+        scope.selectedid = null;
       })
       scope.$on('tree:setselected', function(ev, selected){
-        if (selected_branch != null) {
-          selected_branch.selected = false;
-        }
-        selected.selected = true;
+        scope.selectedid = selected._digger.diggerid;
       })
       scope.user_clicks_branch = function(branch) {
-        if (branch !== selected_branch) {
+        if (branch !== selected_branch){
           return select_branch(branch);
         }
       };
+      scope.togglebranch = function(branch, value){
+        branch._data.expanded = arguments.length>1 ? value : !branch._data.expanded; 
+        scope.$emit('tree:toggle', branch);
+      }
       scope.tree_rows = [];
       on_treeData_change = function() {
         var add_branch_to_list, root_branch, _i, _len, _ref, _results;
@@ -114,7 +106,7 @@ module.directive('abnTree', function($timeout) {
               return branch._children = branch._children.map(function(e) {
                 if (typeof e === 'string') {
                   return {
-                    label: e,
+                    name: e,
                     children: []
                   };
                 } else {
@@ -126,29 +118,28 @@ module.directive('abnTree', function($timeout) {
             return branch._children = [];
           }
         });
-        for_each_branch(function(b, level) {
-          if (!b.uid) {
-            return b.uid = "" + Math.random();
-          }
-        });
         add_branch_to_list = function(level, branch, visible) {
           var child, child_visible, tree_icon, _i, _len, _ref, _results;
-          if (branch.expanded == null) {
-            branch.expanded = false;
+          if(!branch._data){
+            branch._data = {};
+          }
+          if (branch._data.expanded == null) {
+            branch._data.expanded = false;
           }
           if (!branch._children || branch._children.length === 0) {
             tree_icon = attrs.iconLeaf;
           } else {
-            if (branch.expanded) {
+            if (branch._data.expanded) {
               tree_icon = attrs.iconCollapse;
             } else {
               tree_icon = attrs.iconExpand;
             }
           }
+          var digger = branch._digger || {};
           scope.tree_rows.push({
             level: level,
             branch: branch,
-            label: branch.label,
+            label: branch.name || branch.title || digger.tag || 'model',
             tree_icon: tree_icon,
             visible: visible
           });
@@ -157,7 +148,7 @@ module.directive('abnTree', function($timeout) {
             _results = [];
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
               child = _ref[_i];
-              child_visible = visible && branch.expanded;
+              child_visible = visible && branch._data.expanded;
               _results.push(add_branch_to_list(level + 1, child, child_visible));
             }
             return _results;
@@ -171,13 +162,7 @@ module.directive('abnTree', function($timeout) {
         }
         return _results;
       };
-      if (attrs.initialSelection != null) {
-        for_each_branch(function(b) {
-          if (b.label === attrs.initialSelection) {
-            return select_branch(b);
-          }
-        });
-      }
+      
       return scope.$watch('treeData', on_treeData_change, true);
     }
   };
