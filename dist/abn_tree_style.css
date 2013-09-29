@@ -61,6 +61,7 @@ ul.nav.nav-list.abn-tree .level-9 .indented {
 }
 ul.nav.nav-list.abn-tree li>a{
   padding: 2px 4px;
+  cursor:pointer;
 }
 
 ul.nav.nav-list.abn-tree li.active>a{
