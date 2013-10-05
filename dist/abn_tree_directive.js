@@ -63,7 +63,12 @@ module.directive('abnTree', function($timeout) {
         b.level = level;
         return b._data.expanded = b.level < expand_level;
       });
+
+
       scope.selectedid = null;
+
+      
+
       select_branch = function(branch) {
         scope.selectedid = branch._digger.diggerid;
         
@@ -139,7 +144,7 @@ module.directive('abnTree', function($timeout) {
           scope.tree_rows.push({
             level: level,
             branch: branch,
-            label: branch.name || branch.title || digger.tag || 'model',
+            _label: branch.name || branch.title || digger.tag || 'model',
             tree_icon: tree_icon,
             visible: visible
           });
@@ -159,6 +164,9 @@ module.directive('abnTree', function($timeout) {
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           root_branch = _ref[_i];
           _results.push(add_branch_to_list(1, root_branch, true));
+        }
+        if(!scope.selectedid && scope.treeData[0] && scope.treeData[0]._digger){
+          scope.selectedid = scope.treeData[0]._digger.diggerid;
         }
         return _results;
       };
