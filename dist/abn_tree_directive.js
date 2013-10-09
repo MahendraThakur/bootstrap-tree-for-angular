@@ -117,35 +117,56 @@ module.directive('abnTree', function($timeout) {
                 } else {
                   return e;
                 }
-              });
+              }).filter(function(e){
+                if(e._data.tree_filter!==undefined){
+                  return e._data.tree_filter;
+                }
+                else{
+                  return true;
+                }
+              })
             }
           } else {
             return branch._children = [];
           }
         });
         add_branch_to_list = function(level, branch, visible) {
-          var child, child_visible, tree_icon, _i, _len, _ref, _results;
+          var child, child_visible, tree_icon, expand_icon, _i, _len, _ref, _results;
           if(!branch._data){
             branch._data = {};
           }
           if (branch._data.expanded == null) {
             branch._data.expanded = false;
           }
+
+          /*
           if (!branch._children || branch._children.length === 0) {
             tree_icon = attrs.iconLeaf;
           } else {
-            if (branch._data.expanded) {
-              tree_icon = attrs.iconCollapse;
-            } else {
-              tree_icon = attrs.iconExpand;
-            }
+            
           }
+          */
+
+          tree_icon = 'icon-folder-close';
+          if(branch._children && branch._children.length>0){
+            if (branch._data.expanded) {
+              expand_icon = attrs.iconCollapse;
+            } else {
+              expand_icon = attrs.iconExpand;
+            }  
+          }
+
+          if(branch._data.tree_icon){
+            tree_icon = branch._data.tree_icon;
+          }
+          
           var digger = branch._digger || {};
           scope.tree_rows.push({
             level: level,
             branch: branch,
             _label: branch.name || branch.title || digger.tag || 'model',
             tree_icon: tree_icon,
+            expand_icon: expand_icon,
             visible: visible
           });
           if (branch._children != null) {
