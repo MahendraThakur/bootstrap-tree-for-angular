@@ -135,6 +135,18 @@ module.directive('abnTree', function($timeout) {
             }
           }
 
+          var filtered_children = (branch._children || []).filter(function(c){
+            var data = c._data || {};
+            if(data.tree_filter!==undefined){
+              if(!data.tree_filter){
+                return false;
+              }
+            }
+            return true;
+          })
+
+          var has_children = filtered_children.length>0;
+
           if (branch._data.expanded == null) {
             branch._data.expanded = false;
           }
@@ -148,7 +160,8 @@ module.directive('abnTree', function($timeout) {
           */
 
           tree_icon = 'icon-folder-close';
-          if(branch._children && branch._children.length>0){
+          if(has_children){
+
             if (branch._data.expanded) {
               expand_icon = attrs.iconCollapse;
             } else {
