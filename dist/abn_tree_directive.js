@@ -117,13 +117,6 @@ module.directive('abnTree', function($timeout) {
                 } else {
                   return e;
                 }
-              }).filter(function(e){
-                if(e._data.tree_filter!==undefined){
-                  return e._data.tree_filter;
-                }
-                else{
-                  return true;
-                }
               })
             }
           } else {
@@ -135,6 +128,13 @@ module.directive('abnTree', function($timeout) {
           if(!branch._data){
             branch._data = {};
           }
+
+          if(branch._data.tree_filter!==undefined){
+            if(!branch._data.tree_filter){
+              return;
+            }
+          }
+
           if (branch._data.expanded == null) {
             branch._data.expanded = false;
           }
