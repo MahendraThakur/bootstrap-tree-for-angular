@@ -7,6 +7,7 @@
   		<a ng-click="user_clicks_branch(row.branch)">
   			<i 
   				ng-class="row.expand_icon" 
+          ng-show="row.expand_icon" 
   				ng-click="togglebranch(row.branch)" 
   				class="indented tree-icon"> </i>
   			<i ng-class="row.tree_icon" 
