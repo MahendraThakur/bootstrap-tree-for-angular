@@ -1,6 +1,7 @@
 ul.nav.nav-list.abn-tree i.indented {
   padding: 2px;
 }
+/*
 .abn-tree-animate-enter {
   transition: 150ms linear all;
   position: relative;
@@ -23,6 +24,7 @@ ul.nav.nav-list.abn-tree i.indented {
   max-height: 0px;
   opacity: 0;
 }
+*/
 ul.nav.nav-list.abn-tree .level-1 .indented {
   position: relative;
   left: 0px;
