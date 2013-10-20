@@ -174,6 +174,10 @@ module.directive('abnTree', function($timeout) {
           }
           
           var digger = branch._digger || {};
+          
+          if(!branch._id && digger.diggerid){
+            branch._id = digger.diggerid;
+          }
           scope.tree_rows.push({
             level: level,
             branch: branch,
