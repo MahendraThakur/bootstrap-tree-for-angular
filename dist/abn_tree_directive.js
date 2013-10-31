@@ -13,13 +13,13 @@ module.directive('abnTree', function($timeout) {
     link: function(scope, element, attrs) {
       var expand_level, for_each_branch, on_treeData_change, select_branch, selected_branch;
       if (attrs.iconExpand == null) {
-        attrs.iconExpand = 'icon-plus';
+        attrs.iconExpand = 'fa-plus';
       }
       if (attrs.iconCollapse == null) {
-        attrs.iconCollapse = 'icon-minus';
+        attrs.iconCollapse = 'fa-minus';
       }
       if (attrs.iconLeaf == null) {
-        attrs.iconLeaf = 'icon-chevron-right';
+        attrs.iconLeaf = 'fa-chevron-right';
       }
       if (attrs.expandLevel == null) {
         attrs.expandLevel = '3';
@@ -159,7 +159,7 @@ module.directive('abnTree', function($timeout) {
           }
           */
 
-          tree_icon = 'icon-folder-close';
+          tree_icon = 'fa-folder';
           if(has_children){
 
             if (branch._data.expanded) {
@@ -187,7 +187,22 @@ module.directive('abnTree', function($timeout) {
             visible: visible
           });
           if (branch._children != null) {
-            _ref = branch._children;
+            _ref = [].concat(branch._children);
+            _ref.sort(function(a, b) {
+              var textA = (a.name || a._digger.tag).toUpperCase();
+              var textB = (b.name || b._digger.tag).toUpperCase();
+              var folderA = (a._digger.tag=='folder');
+              var folderB = (b._digger.tag=='folder');
+
+              if(folderA && !folderB){
+                return -1;
+              }
+              else if(folderB && !folderA){
+                return 1;
+              }
+              
+              return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            }); 
             _results = [];
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
               child = _ref[_i];
