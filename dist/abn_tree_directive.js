@@ -1,8 +1,11 @@
-var module;
-var template = require('./abn_tree_template.js')
-module = angular.module('angularBootstrapNavTree', []);
 
-module.directive('abnTree', function($timeout) {
+var treemodule;
+var template = require('./abn_tree_template.js')
+treemodule = angular.module('angularBootstrapNavTree', []);
+
+module.exports = 'angularBootstrapNavTree';
+
+treemodule.directive('abnTree', function($timeout) {
   return {
     restrict: 'E',
     template: template,
