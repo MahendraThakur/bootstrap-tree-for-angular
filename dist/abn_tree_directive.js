@@ -93,6 +93,9 @@ treemodule.directive('abnTree', function($timeout) {
         scope.selectedid = null;
       })
       scope.$on('tree:setselected', function(ev, selected){
+        if(!selected){
+          return;
+        }
         scope.selectedid = selected._digger.diggerid;
       })
       scope.user_clicks_branch = function(branch) {
