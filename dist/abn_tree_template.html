@@ -11,12 +11,12 @@
         			<i 
         				ng-class="row.expand_icon" 
                 ng-show="row.expand_icon" 
-        				ng-click="togglebranch(row.branch)" 
+        				ng-click="togglebranch(row.branch);$event.stopPropagation()" 
         				class="indented fa tree-icon"> </i>
             </td><td width=50%>
           
         			<i ng-class="row.tree_icon" 
-        				 ng-click="togglebranch(row.branch)" 
+        				 ng-click="togglebranch(row.branch);$event.stopPropagation()" 
         				 class="indented fa tree-icon"></i>
             </td>
           </tr></table>

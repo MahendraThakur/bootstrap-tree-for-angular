@@ -97,6 +97,7 @@ treemodule.directive('abnTree', function($timeout) {
       })
       scope.user_clicks_branch = function(branch) {
         if (branch !== selected_branch){
+          branch._data.expanded = true;
           return select_branch(branch);
         }
       };
